@@ -1,0 +1,18 @@
+---
+- name: "Prepare"
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: "Skip on non-RedHat systems"
+      ansible.builtin.meta: end_host
+      when: ansible_os_family != 'RedHat'
+
+    - name: "Create junk repo files to simulate messy server"
+      ansible.builtin.copy:
+        dest: "/etc/yum.repos.d/{{ item }}"
+        content: "# junk\n"
+        mode: "0644"
+      loop:
+        - local.repo
+        - CentOS-Base.repo
+        - random-cruft.repo

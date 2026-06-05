@@ -16,7 +16,10 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      pipelining: true
       interpreter_python: auto_silent
+  inventory:
+    group_vars:
+      all:
+        ansible_user: root
 verifier:
   name: ansible
