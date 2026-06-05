@@ -18,20 +18,20 @@
           - epel_repo_file.stat.exists
         quiet: true
 
-    - name: "Check junk repo files are absent"
+    - name: "Check legacy repo files are absent"
       ansible.builtin.stat:
         path: "/etc/yum.repos.d/{{ item }}"
-      register: junk_repo_files
+      register: legacy_repo_files
       loop:
         - local.repo
         - CentOS-Base.repo
         - random-cruft.repo
 
-    - name: "Assert junk repo files do not exist"
+    - name: "Assert legacy repo files do not exist"
       ansible.builtin.assert:
         that:
           - not item.stat.exists
         quiet: true
-      loop: "{{ junk_repo_files.results }}"
+      loop: "{{ legacy_repo_files.results }}"
       loop_control:
         label: "{{ item.item }}"

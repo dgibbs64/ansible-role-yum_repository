@@ -15,7 +15,7 @@ This role manages yum/dnf repositories on RHEL-based systems. It supports:
 
 - Adding repositories with full configuration options
 - Removing repositories by setting `state: absent`
-- Removing specific known junk `.repo` files by name
+- Removing specific legacy or unmanaged `.repo` files by name
 - Purging all unmanaged `.repo` files from `/etc/yum.repos.d/`
 
 Each repository entry maps directly to the [`ansible.builtin.yum_repository`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html) module parameters.
@@ -61,7 +61,7 @@ yum_repositories_purge: false
     - role: "dgibbs64.yum_repository"
 ```
 
-### Remove specific junk files
+### Remove specific legacy files
 
 ```yaml
 ---

@@ -17,7 +17,7 @@
 yum_repositories: []
 
 # List of .repo filenames to explicitly remove from /etc/yum.repos.d/.
-# Use this to clean up known junk files left by previous configuration.
+# Use this to clean up legacy or unmanaged files left by a previous configuration.
 #
 # Example:
 # yum_repository_files_absent:

@@ -7,10 +7,10 @@
       ansible.builtin.meta: end_host
       when: ansible_os_family != 'RedHat'
 
-    - name: "Create junk repo files to simulate messy server"
+    - name: "Create legacy repo files to simulate an unmanaged server"
       ansible.builtin.copy:
         dest: "/etc/yum.repos.d/{{ item }}"
-        content: "# junk\n"
+        content: "# legacy\n"
         mode: "0644"
       loop:
         - local.repo
