@@ -1,19 +1,19 @@
 ---
-- name: "Test if yum_repositories is set correctly"
+- name: "Test that yum_repositories is set correctly"
   ansible.builtin.assert:
     that:
       - yum_repositories is defined
       - yum_repositories is iterable
     quiet: true
 
-- name: "Test if yum_repository_files_absent is set correctly"
+- name: "Test that yum_repository_files_absent is set correctly"
   ansible.builtin.assert:
     that:
       - yum_repository_files_absent is defined
       - yum_repository_files_absent is iterable
     quiet: true
 
-- name: "Test if yum_repositories_purge is set correctly"
+- name: "Test that yum_repositories_purge is set correctly"
   ansible.builtin.assert:
     that:
       - yum_repositories_purge is defined
