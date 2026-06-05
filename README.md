@@ -3,8 +3,7 @@
 An [Ansible](https://www.ansible.com) role that manages yum/dnf repositories on RHEL-based systems.
 
 <p align="center">
-<a href="https://app.codacy.com/gh/dgibbs64/ansible-role-yum_repository"><img src="https://img.shields.io/codacy/grade/1a892d499efd4dabb73beffa8d64ed01?logo=codacy&style=flat-square" alt="Codacy grade"></a>
-<a href="https://github.com/dgibbs64/ansible-role-yum_repository/actions/workflows/molecule.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/dgibbs64/ansible-role-yum_repository/molecule.yml?label=molecule&logo=ansible&style=flat-square"></a>
+<a href="https://github.com/dgibbs64/ansible-role-yum_repository/actions/workflows/action-molecule.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/dgibbs64/ansible-role-yum_repository/action-molecule.yml?label=molecule&logo=ansible&style=flat-square"></a>
 <a href="https://galaxy.ansible.com/dgibbs64/yum_repository"><img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/dgibbs64/ansible-role-yum_repository?color=EE0000&label=release&logo=ansible&style=flat-square"></a>
 <a href="/LICENSE.md"><img src="https://img.shields.io/github/license/dgibbs64/ansible-role-yum_repository?style=flat-square" alt="MIT License"></a>
 </p>
