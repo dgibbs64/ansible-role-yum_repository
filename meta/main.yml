@@ -1,0 +1,29 @@
+---
+galaxy_info:
+  author: Daniel Gibbs
+  company: none
+  description: Manage yum/dnf repositories on RHEL-based systems
+  license: MIT
+  min_ansible_version: "2.13"
+  namespace: dgibbs64
+  role_name: yum_repository
+
+  platforms:
+    - name: EL
+      versions:
+        - "7"
+        - "8"
+        - "9"
+    - name: Amazon
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+  galaxy_tags:
+    - system
+    - yum
+    - dnf
+    - repository
+
+dependencies: []

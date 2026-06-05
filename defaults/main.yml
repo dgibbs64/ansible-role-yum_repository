@@ -1,0 +1,17 @@
+---
+# List of yum repositories to manage.
+# Each entry maps directly to ansible.builtin.yum_repository parameters.
+# Set state: absent to remove a repository.
+#
+# Example:
+# yum_repositories:
+#   - name: epel
+#     description: Extra Packages for Enterprise Linux
+#     baseurl: https://download.fedoraproject.org/pub/epel///
+#     gpgcheck: true
+#     gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-
+#     enabled: true
+#     state: present
+#   - name: old-repo
+#     state: absent
+yum_repositories: []

@@ -1,0 +1,7 @@
+---
+- name: "Test if yum_repositories is set correctly"
+  ansible.builtin.assert:
+    that:
+      - yum_repositories is defined
+      - yum_repositories is iterable
+    quiet: true
