@@ -26,3 +26,4 @@
   loop: "{{ yum_repositories }}"
   loop_control:
     label: "{{ item.name }}"
+  notify: "Clean package manager cache"

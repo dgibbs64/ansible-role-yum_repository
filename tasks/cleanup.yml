@@ -4,6 +4,7 @@
     path: "/etc/yum.repos.d/{{ item }}"
     state: absent
   loop: "{{ yum_repository_files_absent }}"
+  notify: "Clean package manager cache"
 
 - name: "Purge unmanaged repo files"
   when: yum_repositories_purge
@@ -33,3 +34,4 @@
       loop_control:
         label: "{{ item.path }}"
       when: item.path | basename not in _yum_repository_managed_files
+      notify: "Clean package manager cache"
