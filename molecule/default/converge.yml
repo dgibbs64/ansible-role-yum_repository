@@ -1,7 +1,11 @@
 ---
 - name: "Converge"
   hosts: all
-  gather_facts: false
+  gather_facts: true
+  pre_tasks:
+    - name: "Skip on non-RedHat systems"
+      ansible.builtin.meta: end_host
+      when: ansible_os_family != 'RedHat'
   vars:
     yum_repository_files_absent:
       - local.repo

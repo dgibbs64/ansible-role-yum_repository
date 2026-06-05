@@ -14,5 +14,9 @@ platforms:
     cgroupns_mode: host
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      pipelining: true
+      interpreter_python: auto_silent
 verifier:
   name: ansible

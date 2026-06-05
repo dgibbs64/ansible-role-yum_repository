@@ -1,8 +1,12 @@
 ---
-- name: "Converge"
+- name: "Setup"
   hosts: all
-  gather_facts: false
+  gather_facts: true
   tasks:
+    - name: "Skip on non-RedHat systems"
+      ansible.builtin.meta: end_host
+      when: ansible_os_family != 'RedHat'
+
     - name: "Create junk repo files to simulate messy server"
       become: true
       ansible.builtin.copy:
@@ -16,7 +20,11 @@
 
 - name: "Converge"
   hosts: all
-  gather_facts: false
+  gather_facts: true
+  pre_tasks:
+    - name: "Skip on non-RedHat systems"
+      ansible.builtin.meta: end_host
+      when: ansible_os_family != 'RedHat'
   vars:
     yum_repositories_purge: true
     yum_repositories:

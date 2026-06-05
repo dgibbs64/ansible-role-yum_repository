@@ -19,12 +19,12 @@
       ansible.builtin.set_fact:
         _yum_repository_managed_files: >-
           {{ (_yum_repository_present | selectattr('file', 'defined') | map(attribute='file') | list
-              + _yum_repository_present | selectattr('file', 'undefined') | map(attribute='name') | list)
-             | map('regex_replace', '$', '.repo') | list }}
+            + _yum_repository_present | selectattr('file', 'undefined') | map(attribute='name') | list)
+            | map('regex_replace', '$', '.repo') | list }}
       vars:
         _yum_repository_present: >-
           {{ (yum_repositories | selectattr('state', 'undefined') | list)
-             + (yum_repositories | selectattr('state', 'defined') | selectattr('state', 'ne', 'absent') | list) }}
+            + (yum_repositories | selectattr('state', 'defined') | selectattr('state', 'ne', 'absent') | list) }}
 
     - name: "Remove unmanaged repo files"
       ansible.builtin.file:

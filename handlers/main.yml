@@ -1,5 +1,5 @@
 ---
 - name: "Clean package manager cache"
   ansible.builtin.command:
-    cmd: "{{ ansible_pkg_mgr }} clean all"
+    cmd: "{{ ansible_pkg_mgr | default('dnf') }} clean all"
   changed_when: true
