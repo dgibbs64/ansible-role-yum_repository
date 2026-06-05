@@ -15,6 +15,8 @@ This role manages yum/dnf repositories on RHEL-based systems. It supports:
 
 - Adding repositories with full configuration options
 - Removing repositories by setting `state: absent`
+- Removing specific known junk `.repo` files by name
+- Purging all unmanaged `.repo` files from `/etc/yum.repos.d/`
 
 Each repository entry maps directly to the [`ansible.builtin.yum_repository`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html) module parameters.
 
@@ -30,6 +32,12 @@ None.
 # Each entry maps directly to ansible.builtin.yum_repository parameters.
 # Set state: absent to remove a repository.
 yum_repositories: []
+
+# List of .repo filenames to explicitly remove from /etc/yum.repos.d/.
+yum_repository_files_absent: []
+
+# When true, removes all .repo files in /etc/yum.repos.d/ not managed by this role.
+yum_repositories_purge: false
 ```
 
 ## Example Playbook
@@ -53,6 +61,47 @@ yum_repositories: []
     - role: "dgibbs64.yum_repository"
 ```
 
+### Remove specific junk files
+
+```yaml
+---
+- name: Yum Repository
+  hosts: all
+  vars:
+    yum_repository_files_absent:
+      - local.repo
+      - CentOS-Base.repo
+      - CentOS-AppStream.repo
+    yum_repositories:
+      - name: epel
+        description: Extra Packages for Enterprise Linux
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+        gpgcheck: true
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
+        enabled: true
+  roles:
+    - role: "dgibbs64.yum_repository"
+```
+
+### Purge all unmanaged repos
+
+```yaml
+---
+- name: Yum Repository
+  hosts: all
+  vars:
+    yum_repositories_purge: true
+    yum_repositories:
+      - name: epel
+        description: Extra Packages for Enterprise Linux
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+        gpgcheck: true
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
+        enabled: true
+  roles:
+    - role: "dgibbs64.yum_repository"
+```
+
 ### Remove a repository
 
 ```yaml
@@ -61,32 +110,6 @@ yum_repositories: []
   hosts: all
   vars:
     yum_repositories:
-      - name: old-repo
-        state: absent
-  roles:
-    - role: "dgibbs64.yum_repository"
-```
-
-### Multiple repositories
-
-```yaml
----
-- name: Yum Repository
-  hosts: all
-  vars:
-    yum_repositories:
-      - name: epel
-        description: Extra Packages for Enterprise Linux
-        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
-        gpgcheck: true
-        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
-        enabled: true
-      - name: epel-testing
-        description: Extra Packages for Enterprise Linux - Testing
-        baseurl: https://download.fedoraproject.org/pub/epel/testing/$releasever/$basearch/
-        gpgcheck: true
-        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
-        enabled: false
       - name: old-repo
         state: absent
   roles:

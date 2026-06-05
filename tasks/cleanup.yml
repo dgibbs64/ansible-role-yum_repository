@@ -1,0 +1,35 @@
+---
+- name: "Remove explicit absent repo files"
+  ansible.builtin.file:
+    path: "/etc/yum.repos.d/{{ item }}"
+    state: absent
+  loop: "{{ yum_repository_files_absent }}"
+
+- name: "Purge unmanaged repo files"
+  when: yum_repositories_purge
+  block:
+    - name: "Find all repo files"
+      ansible.builtin.find:
+        paths: /etc/yum.repos.d
+        patterns: "*.repo"
+      register: _yum_repository_found_files
+
+    - name: "Build list of managed repo filenames"
+      ansible.builtin.set_fact:
+        _yum_repository_managed_files: >-
+          {{ (_yum_repository_present | selectattr('file', 'defined') | map(attribute='file') | list
+              + _yum_repository_present | selectattr('file', 'undefined') | map(attribute='name') | list)
+             | map('regex_replace', '$', '.repo') | list }}
+      vars:
+        _yum_repository_present: >-
+          {{ (yum_repositories | selectattr('state', 'undefined') | list)
+             + (yum_repositories | selectattr('state', 'defined') | selectattr('state', 'ne', 'absent') | list) }}
+
+    - name: "Remove unmanaged repo files"
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ _yum_repository_found_files.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+      when: item.path | basename not in _yum_repository_managed_files

@@ -2,9 +2,23 @@
 - name: "Converge"
   hosts: all
   gather_facts: false
+  tasks:
+    - name: "Create junk repo files to simulate messy server"
+      become: true
+      ansible.builtin.copy:
+        dest: "/etc/yum.repos.d/{{ item }}"
+        content: "# junk\n"
+        mode: "0644"
+      loop:
+        - local.repo
+        - CentOS-Base.repo
+        - random-cruft.repo
+
+- name: "Converge"
+  hosts: all
+  gather_facts: false
   vars:
-    yum_repository_files_absent:
-      - local.repo
+    yum_repositories_purge: true
     yum_repositories:
       - name: epel
         description: Extra Packages for Enterprise Linux
@@ -12,6 +26,5 @@
         gpgcheck: true
         gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
         enabled: true
-        state: present
   roles:
     - role: "dgibbs64.yum_repository"

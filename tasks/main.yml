@@ -13,5 +13,8 @@
 - name: "Become block"
   become: true
   block:
+    - name: "Cleanup"
+      ansible.builtin.import_tasks: cleanup.yml
+
     - name: "Yum Repository"
       ansible.builtin.import_tasks: yum_repository.yml
